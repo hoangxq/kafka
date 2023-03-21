@@ -1,0 +1,42 @@
+</ul>
+    </div>
+    <div class="right-side">
+        <form id="insert-form">
+            <label for="input">Input:</label>
+            <input type="text" id="input" name="input">
+            <button type="submit">Insert</button>
+        </form>
+    </div>
+</div>
+<script>
+    const getButton = document.querySelector("#get-button");
+
+    getButton.addEventListener("click", () => {
+        const url = "http://localhost:8000";
+
+        const params = new URLSearchParams({ action: "get-data" });
+        window.location.href = `${url}?${params}`;
+    });
+
+    const insertForm = document.querySelector("#insert-form");
+
+    insertForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const inputElement = document.querySelector("#input");
+        const inputData = inputElement.value;
+        console.log(inputData);
+
+        fetch("http://localhost:8000", {
+            method: "POST",
+            body: inputData,
+            headers: {
+                "Content-Type": "text/plain"
+            }
+        });
+        const url = "http://localhost:8000/?action=get-data";
+        window.location.href = url;
+    });
+</script>
+</body>
+</html>

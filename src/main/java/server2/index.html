@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <title>Example</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 700px;
+            height: 500px;
+            border: 1px solid black;
+            padding: 10px;
+            display: flex;
+        }
+
+        .left-side {
+            flex: 1;
+            border-right: 1px solid black;
+            padding-right: 10px;
+        }
+
+        .right-side {
+            flex: 1;
+            padding-left: 10px;
+        }
+
+        .list {
+            margin-top: 60px;
+            padding-left: 50px;
+            list-style: disc;
+        }
+
+        .list li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left-side">
+        <button id="get-button">Get</button>
+        <ul class="list">
+<!--            <li>Item 1</li>-->
+<!--            <li>Item 2</li>-->
+<!--            <li>Item 3</li>-->
+        </ul>
+    </div>
+    <div class="right-side">
+        <form id="insert-form">
+            <label for="input">Input:</label>
+            <input type="text" id="input" name="input">
+            <button type="submit">Insert</button>
+        </form>
+    </div>
+</div>
+<script>
+    const getButton = document.querySelector("#get-button");
+
+    getButton.addEventListener("click", () => {
+        const url = "http://localhost:8000";
+
+        const params = new URLSearchParams({ action: "get-data" });
+        window.location.href = `${url}?${params}`;
+    });
+
+    const insertForm = document.querySelector("#insert-form");
+
+    insertForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const inputElement = document.querySelector("#input");
+        const inputData = inputElement.value;
+        console.log(inputData);
+
+        fetch("http://localhost:8000", {
+            method: "POST",
+            body: inputData,
+            headers: {
+                "Content-Type": "text/plain"
+            }
+        });
+        const url = "http://localhost:8000/?action=get-data";
+        window.location.href = url;
+    });
+</script>
+</body>
+</html>
